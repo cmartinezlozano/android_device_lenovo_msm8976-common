@@ -14,6 +14,8 @@ audio.parser.ip.buffer.size=262144
 audio.playback.mch.downsample=true
 audio.pp.asphere.enabled=false
 audio.safx.pbe.enabled=true
+#Period size for ull playback & low latency record
+audio_hal.period_multiplier=2
 
 persist.audio.fluence.speaker=true
 persist.audio.fluence.voicecall=true
@@ -36,6 +38,10 @@ ro.audio.monitorRotation=true
 # Bluetooth
 bluetooth.hfp.client=1
 qcom.bluetooth.soc=smd
+ro.btconfig.if=smd
+ro.btconfig.dev=/dev/smd3
+ro.btconfig.vendor=qcom
+ro.btconfig.chip=WCN3680
 
 # Camera
 media.camera.ts.monotonic=1
@@ -51,9 +57,12 @@ ro.qq.camera.sensor=3
 # Dex2oat threads for faster app installation
 ro.sys.fw.dex2oat_thread_count=4
 
+#
 # Display
 debug.egl.hw=0
+# used by libscale.so
 debug.enable.sglscale=1
+# used by hwcomposer.msm8952.so and libqdutils.so
 debug.mdpcomp.logs=0
 debug.sf.hw=1
 dev.pm.dyn_samplingrate=1
@@ -64,13 +73,18 @@ ro.opengles.version=196610
 ro.sf.lcd_density=320
 lockscreen.rot_override=true
 
-# we hate cabl!
+#Fix Touch and bootanimation orientation.
+ro.sf.hwrotation=90
+
+# Disable CABL (Content Adaptive Backlight)
+# used by libmm-dspp-utils.so
 ro.qualcomm.cabl=0
 
 
 # FRP
 ro.frp.pst=/dev/block/bootdevice/by-name/config
 
+#
 # Media
 mm.enable.smoothstreaming=true
 mmp.enable.3g2=true
@@ -85,9 +99,6 @@ ro.config.media_vol_steps=30
 ro.vendor.extension_library=libqti-perfd-client.so
 ro.vendor.at_library=libqti-at.so
 ro.vendor.gt_library=libqti-gt.so
-
-# TCP
-net.tcp.2g_init_rwnd=10
 
 # Time
 persist.timed.enable=true
@@ -126,3 +137,33 @@ ro.cutoff_voltage_mv=3200
 
 #enable game colocation feature
 sched.colocate.enable=1
+
+ro.config.zram=true
+
+# system props for the cne module #
+# 4 - enable NSRM adb root;#
+# 1 - Only CnE is enabled; NSRM, FMC, and WQE are disabled#
+# 0 - Disables CnE  #
+persist.dpm.feature=4
+
+#
+# Networking settings ported from init.qcom.rc
+#
+
+# Define TCP buffer sizes for various networks
+# ReadMin, ReadInitial, ReadMax, WriteMin, WriteInitial, WriteMax,
+net.tcp.buffersize.default=4096,87380,524288,4096,16384,110208
+net.tcp.buffersize.wifi=524288,2097152,4194304,262144,524288,1048576
+net.tcp.buffersize.lte=2097152,4194304,8388608,262144,524288,1048576
+net.tcp.buffersize.umts=4094,87380,110208,4096,16384,110208
+net.tcp.buffersize.hspa=4094,87380,1220608,4096,16384,1220608
+net.tcp.buffersize.hsupa=4094,87380,1220608,4096,16384,1220608
+net.tcp.buffersize.hsdpa=4094,87380,1220608,4096,16384,1220608
+net.tcp.buffersize.hspap=4094,87380,1220608,4096,16384,1220608
+net.tcp.buffersize.edge=4093,26280,35040,4096,16384,35040
+net.tcp.buffersize.gprs=4092,8760,11680,4096,8760,11680
+net.tcp.buffersize.evdo=4094,87380,524288,4096,16384,262144
+
+ro.telephony.call_ring.multiple=false
+
+net.tcp.2g_init_rwnd 10

@@ -47,7 +47,8 @@ TARGET_NO_BOOTLOADER := true
 
 # Kernel
 BOARD_KERNEL_BASE := 0x80000000
-BOARD_KERNEL_CMDLINE := androidboot.hardware=qcom msm_rtb.filter=0x237 ehci-hcd.park=3 androidboot.bootdevice=7824900.sdhci ramoops.mem_address=0x30000000 ramoops.mem_size=0x300000 ramoops.ecc=1 ramoops.console_size=0x20000
+BOARD_KERNEL_CMDLINE := androidboot.hardware=qcom msm_rtb.filter=0x237 ehci-hcd.park=3 androidboot.bootdevice=7824900.sdhci
+BOARD_KERNEL_CMDLINE += ramoops.mem_address=0x30000000 ramoops.mem_size=0x300000 ramoops.ecc=1 ramoops.console_size=0x20000
 BOARD_KERNEL_IMAGE_NAME := Image.gz-dtb
 BOARD_KERNEL_PAGESIZE := 2048
 BOARD_MKBOOTIMG_ARGS := --kernel_offset 0x08000 --ramdisk_offset 0x01000000 --tags_offset 0x00000100
@@ -55,6 +56,9 @@ TARGET_KERNEL_SOURCE := kernel/lenovo/msm8976
 TARGET_KERNEL_CONFIG := lineage_YTX703_defconfig
 # You can access menuconfig without messing up the kernel build by running:
 # make -C kernel/lenovo/msm8976 O=$OUT/obj/KERNEL_OBJ ARCH=arm64 menuconfig
+
+# Do not create /cache -> /data/cache symlink.
+BOARD_CACHEIMAGE_FILE_SYSTEM_TYPE := ext4
 
 # ANT+
 BOARD_ANT_WIRELESS_DEVICE := "vfs-prerelease"
@@ -88,7 +92,6 @@ BOARD_USES_ALSA_AUDIO := true
 BOARD_SUPPORTS_SOUND_TRIGGER := true
 USE_CUSTOM_AUDIO_POLICY := 1
 USE_XML_AUDIO_POLICY_CONF := 1
-DOLBY_ENABLE := false
 
 # Media
 TARGET_ENABLE_QC_AV_ENHANCEMENTS := true
@@ -182,6 +185,9 @@ TARGET_TAP_TO_WAKE_NODE := "/sys/android_touch/doubletap2wake"
 
 # Lights
 TARGET_PROVIDES_LIBLIGHT := true
+
+# Healthd
+BACKLIGHT_PATH := "/sys/class/backlight/lcd-bl/brightness"
 
 # Media
 TARGET_HAVE_SIGNED_VENUS_FW := true

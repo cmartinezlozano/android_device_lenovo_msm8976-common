@@ -18,9 +18,6 @@
 # inherit from the proprietary version
 $(call inherit-product, vendor/lenovo/msm8976-common/msm8976-common-vendor.mk)
 
-# apply framework patch for boot rotation
-PATCH_RESULT := $(shell (patch -p1 -r - --no-backup-if-mismatch -i $(LOCAL_PATH)/framework_rot.patch))
-
 # Overlays
 DEVICE_PACKAGE_OVERLAYS += $(LOCAL_PATH)/overlay
 
@@ -120,6 +117,8 @@ PRODUCT_COPY_FILES += \
     $(LOCAL_PATH)/audio/sound_trigger_mixer_paths_wcd9335.xml:system/etc/sound_trigger_mixer_paths_wcd9335.xml \
     $(LOCAL_PATH)/audio/sound_trigger_platform_info.xml:system/etc/sound_trigger_platform_info.xml \
     $(LOCAL_PATH)/audio/wfdconfig.xml:system/etc/wfdconfig.xml \
+    $(LOCAL_PATH)/audio/audio_effects.conf:system/etc/audio_effects.conf \
+    $(LOCAL_PATH)/audio/audio_effects.conf:system/vendor/etc/audio_effects.conf \
     $(LOCAL_PATH)/audio/wfdconfigsink.xml:system/etc/wfdconfigsink.xml \
     $(TOPDIR)frameworks/av/services/audiopolicy/config/a2dp_audio_policy_configuration.xml:/system/etc/a2dp_audio_policy_configuration.xml \
     $(TOPDIR)frameworks/av/services/audiopolicy/config/audio_policy_volumes.xml:/system/etc/audio_policy_volumes.xml \
